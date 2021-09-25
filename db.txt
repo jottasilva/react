@@ -1,0 +1,31 @@
+const Sequelize = require('sequelize')
+const server = require('./server')
+
+/*Configuração banco de dados*/
+const sequelize = new Sequelize('crudjs','root','', {
+    host: "localhost",
+    dialect: 'mysql'
+})
+sequelize.authenticate().then(function(){
+    console.log("Conectado com Sucesso!")
+}).catch(function(erro){
+    console.log("Falha ao tentar se conectar")
+})
+
+/*CRIA TABELA NO BANCO MYSQL */
+const Postagem = sequelize.define('Postagens',{
+    titulo:{
+        type: Sequelize.STRING
+    },
+    conteudo: {
+        type: Sequelize.TEXT
+    }
+})
+/*Postagem.sync({force: true})*/
+
+
+/*Insedere Dados no banco*/ 
+Postagem.create({
+    titulo: "TESTE SEQUELIZE",
+    conteudo : "TESTE DE CRUD COM SEQUELIZE E NODE JS"  
+})
